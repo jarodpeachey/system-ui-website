@@ -1,0 +1,67 @@
+{
+  "name": "gatsby-starter-default",
+  "private": true,
+  "description": "A simple starter to get up and developing quickly with Gatsby",
+  "version": "0.1.0",
+  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.29",
+    "@fortawesome/free-brands-svg-icons": "^5.13.1",
+    "@fortawesome/free-solid-svg-icons": "^5.13.1",
+    "@fortawesome/react-fontawesome": "^0.1.11",
+    "axios": "^0.19.2",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.3.1",
+    "eslint-config-airbnb": "^18.2.0",
+    "eslint-config-gatsby-standard": "^2.2.0",
+    "eslint-plugin-import": "^2.21.2",
+    "eslint-plugin-jsx-a11y": "^6.3.1",
+    "eslint-plugin-react": "^7.20.0",
+    "eslint-plugin-react-hooks": "^4.0.4",
+    "gatsby": "^2.23.10",
+    "gatsby-image": "^2.4.8",
+    "gatsby-plugin-manifest": "^2.4.13",
+    "gatsby-plugin-offline": "^3.2.12",
+    "gatsby-plugin-react-helmet": "^3.3.5",
+    "gatsby-plugin-sharp": "^2.6.13",
+    "gatsby-plugin-styled-components": "^3.3.6",
+    "gatsby-source-filesystem": "^2.3.13",
+    "gatsby-transformer-sharp": "^2.5.6",
+    "http-proxy-middleware": "^1.0.4",
+    "netlify-lambda": "^1.6.3",
+    "npm-run-all": "^4.1.5",
+    "prop-types": "^15.7.2",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-helmet": "^6.1.0",
+    "styled-components": "^5.1.1"
+  },
+  "devDependencies": {
+    "prettier": "2.0.5"
+  },
+  "keywords": [
+    "gatsby"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "lint": "eslint \"./src/**/*{.js,.jsx}\" --fix",
+    "serve": "gatsby clean && gatsby build && gatsby serve",
+    "nuke": "./scripts/nuke.sh",
+    "develop": "gatsby develop",
+    "start": "run-p start:**",
+    "start:app": "npm run develop",
+    "start:lambda": "netlify-lambda serve src/functions",
+    "build": "gatsby build && netlify-lambda build src/functions",
+    "build:app": "gatsby build",
+    "build:lambda": "netlify-lambda build src/functions",
+    "functions": "cd functions && yarn install && cd ..",
+    "dev": "netlify dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby-starter-default"
+  },
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  }
+}

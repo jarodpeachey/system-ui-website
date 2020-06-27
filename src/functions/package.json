@@ -1,0 +1,16 @@
+{
+  "name": "root",
+  "description": "A modern, blazing fast and intuitive CMS",
+  "main": "index.js",
+  "author": "Jarod Peachey",
+  "license": "ISC",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "axios": "^0.19.2",
+    "dotenv": "^8.2.0",
+    "mailchimp-api-v3": "^1.13.1",
+    "querystring": "^0.2.0"
+  }
+}
