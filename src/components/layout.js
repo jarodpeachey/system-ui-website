@@ -73,7 +73,10 @@ const Layout = ({ children }) => (
             <MobileMenuItem>
               <Link to="/">Home</Link>
             </MobileMenuItem>
-            <MobileMenuItem submenu>
+            <MobileMenuItem>
+              <Link to="#sign-up">Sign Up</Link>
+            </MobileMenuItem>
+            {/* <MobileMenuItem submenu>
               <Link to="/components">Components</Link>
               <MobileSubMenu>
                 <MobileSubMenuItem>
@@ -86,15 +89,18 @@ const Layout = ({ children }) => (
                   <Link to="/components/display">Display</Link>
                 </MobileSubMenuItem>
               </MobileSubMenu>
-            </MobileMenuItem>
+            </MobileMenuItem> */}
           </MobileMenu>
         </Mobile>
         <Tablet>
           <Navbar>
             <NavbarItem>
-              <a href="/">Home</a>
+              <Link to="/">Home</Link>
             </NavbarItem>
-            <NavbarItem submenu>
+            <NavbarItem>
+              <Link to="#sign-up">Sign Up</Link>
+            </NavbarItem>
+            {/* <NavbarItem submenu>
               <Link to="/components">Components</Link>
               <SubMenu>
                 <SubMenuItem>
@@ -107,15 +113,15 @@ const Layout = ({ children }) => (
                   <Link to="/components/display">Display</Link>
                 </SubMenuItem>
               </SubMenu>
-            </NavbarItem>
-            <NavbarItem square>
+            </NavbarItem> */}
+            {/* <NavbarItem square>
               <a href="/">
                 <FontAwesomeIcon
                   icon="heart"
                   style={{ width: 20, height: 20, fontSize: 24 }}
                 />
               </a>
-            </NavbarItem>
+            </NavbarItem> */}
           </Navbar>
         </Tablet>
       </Header>
