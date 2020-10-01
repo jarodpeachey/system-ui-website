@@ -1,8 +1,18 @@
 import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { pSBC } from '../utils/color';
 
-const Alert = ({ children, color, variant, icon, style, close }) => {
+const Alert = ({
+  children,
+  className,
+  id,
+  customStyles,
+  color,
+  variant,
+  icon,
+  close,
+}) => {
   const [showAlert, setShowAlert] = useState(true);
 
   const onClick = () => {
@@ -11,14 +21,16 @@ const Alert = ({ children, color, variant, icon, style, close }) => {
 
   return (
     <Wrapper
-      style={style}
+      className={className}
+      id={id}
+      customStyles={customStyles}
       icon={!!icon}
       show={showAlert}
       color={color}
       variant={variant}
     >
       {icon && <Icon>{icon}</Icon>}
-      <div>{children}</div>
+      {children}
       {close && (
         <CloseButton onClick={onClick}>
           <FontAwesomeIcon icon="times" />
@@ -31,54 +43,62 @@ const Alert = ({ children, color, variant, icon, style, close }) => {
 const Wrapper = styled.div`
   width: 100%;
   display: ${(props) => (props.show ? 'flex' : 'none')};
-  align-items: flex-start;
+  align-items: center;
   margin: ${(props) => props.theme.spacing.three}px 0;
   padding: 16px 24px;
+  font-size: 18px;
   background: ${(props) =>
-    props.color === 'primary' ?
-      props.theme.color.primary.main :
-      props.color === 'secondary' ?
-      props.theme.color.secondary.main :
-      props.color === 'success' ?
-      props.theme.color.success :
-      props.color === 'error' ?
-      props.theme.color.error :
-      props.theme.color.gray.two};
-  * {
-    color: ${(props) => (props.color ? 'white' : null)};
-  }
-  color: ${(props) => (props.color ? 'white' : null)};
+    props.color === 'primary'
+      ? props.theme.color.primary
+      : props.color === 'secondary'
+      ? props.theme.color.secondary
+      : props.color === 'success'
+      ? props.theme.color.success
+      : props.color === 'error'
+      ? props.theme.color.error
+      : props.theme.color.gray.six};
+  color: white;
   ${(props) =>
     props.variant === 'light' &&
     css`
-      background: ${props.color === 'primary' ?
-        props.theme.color.primary.main :
-        props.color === 'secondary' ?
-        props.theme.color.secondary.main :
-        props.color === 'success' ?
-        props.theme.color.success :
-        props.color === 'error' ?
-        props.theme.color.error :
-        '#ffffff'}15;
-      color: ${props.color === 'primary' ?
-        props.theme.color.primary.main :
-        props.color === 'secondary' ?
-        props.theme.color.secondary.main :
-        props.color === 'success' ?
-        props.theme.color.success :
-        props.color === 'error' ?
-        props.theme.color.error :
-        null};
-      * {
-        color: ${props.color === 'primary' ?
-          props.theme.color.primary.main :
-          props.color === 'secondary' ?
-          props.theme.color.secondary.main :
-          props.color === 'success' ?
-          props.theme.color.success :
-          props.color === 'error' ?
-          props.theme.color.error :
-          null};
+      background: ${props.color === 'primary'
+        ? props.theme.color.primary
+        : props.color === 'secondary'
+        ? props.theme.color.secondary
+        : props.color === 'success'
+        ? props.theme.color.success
+        : props.color === 'error'
+        ? props.theme.color.error
+        : props.theme.color.text.heading}15;
+      color: ${pSBC(
+        `${
+          props.color === 'primary'
+            ? props.theme.color.primary
+            : props.color === 'secondary'
+            ? props.theme.color.secondary
+            : props.color === 'success'
+            ? props.theme.color.success
+            : props.color === 'error'
+            ? props.theme.color.error
+            : props.theme.color.text.heading
+        }`,
+        -25,
+      )};
+      span {
+        color: ${pSBC(
+          `${
+            props.color === 'primary'
+              ? props.theme.color.primary
+              : props.color === 'secondary'
+              ? props.theme.color.secondary
+              : props.color === 'success'
+              ? props.theme.color.success
+              : props.color === 'error'
+              ? props.theme.color.error
+              : props.theme.color.text.heading
+          }`,
+          -25,
+        )};
       }
     `};
   ${(props) =>
@@ -88,9 +108,9 @@ const Wrapper = styled.div`
       border: 1px solid #efefef;
     `};
   border-radius: ${(props) => props.theme.radius.one};
-  padding-right: 0;
-  padding-right: 0;
+  padding-right: ${(props) => (props.close ? '0' : '24px')};
   padding-left: ${(props) => (props.icon ? '0' : '24px')};
+  ${(props) => props.customStyles}
 `;
 
 const CloseButton = styled.div`
@@ -100,10 +120,15 @@ const CloseButton = styled.div`
   cursor: pointer;
   align-items: center;
   justify-content: center;
-  font-size: 20px;
+  font-size: 18px;
   margin-left: auto;
+  color: ${(props) => props.theme.color.text.light.two};
   padding-right: 24px;
+  :hover {
+    color: ${(props) => props.theme.color.text.light.one};
+  }
 `;
+
 const Icon = styled.div`
   width: 40px;
   height: 100%;

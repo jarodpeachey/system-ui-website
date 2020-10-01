@@ -2,28 +2,42 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import PropTypes from 'prop-types';
+import { calculateColor } from '../utils/color';
 
-const RadioButton = ({ onChange, children, disabled, name, value }) => {
+const RadioButton = ({
+  children,
+  className,
+  id,
+  onChange,
+  disabled,
+  name,
+  value,
+  inline,
+}) => {
   const customOnChange = (e) => {
     onChange && onChange(e);
   };
 
   return (
-    <Wrapper>
-      <RadioButtonWrapper disabled={disabled} htmlFor={name}>
-        <input
-          value={value}
-          onChange={customOnChange}
-          disabled={disabled}
-          name={name}
-          type="radio"
-        />
-        <span className="checkmark mr-2">
-          <div className="icon" />
-        </span>
-        {children}
-      </RadioButtonWrapper>
-    </Wrapper>
+    <RadioButtonWrapper
+      className={className}
+      id={id}
+      disabled={disabled}
+      htmlFor={name}
+      inline={inline}
+    >
+      <input
+        value={value}
+        onChange={customOnChange}
+        disabled={disabled}
+        name={name}
+        type="radio"
+      />
+      <span className="checkmark mr-2">
+        <div className="icon" />
+      </span>
+      {children}
+    </RadioButtonWrapper>
   );
 };
 
@@ -37,7 +51,7 @@ const RadioButtonWrapper = styled.label`
   color: ${(props) => (props.disabled ? 'rgb(190, 190, 190)' : '')};
   display: block;
   position: relative;
-  display: flex;
+  display: ${(props) => (props.inline ? 'inline-flex' : 'flex')};
   align-items: center;
   cursor: ${(props) => (props.disabled ? '' : 'pointer')};
   input {
@@ -69,7 +83,9 @@ const RadioButtonWrapper = styled.label`
     transition: all 0.1s;
     border: 1px solid
       ${(props) =>
-        props.disabled ? 'rgb(230, 230, 230)' : props.theme.color.primary.main};
+        props.disabled
+          ? 'rgb(230, 230, 230)'
+          : props.theme.color.primary};
   }
   .icon {
     background: white;
@@ -84,18 +100,16 @@ const RadioButtonWrapper = styled.label`
   // }
     input:hover ~ .checkmark {
     border: 1px solid ${(props) =>
-      props.disabled ?
-        'rgb(230, 230, 230)' :
-        `${props.theme.color.primary.main}60`};
+      props.disabled ? 'rgb(230, 230, 230)' : props.theme.color.gray.four};
   }
     input:checked:hover ~ .checkmark {
     border: 1px solid ${(props) =>
-      props.disabled ?
-        'rgb(230, 230, 230)' :
-        `${props.theme.color.primary.main}`};
+      props.disabled
+        ? 'rgb(230, 230, 230)'
+        : `${props.theme.color.primary}`};
   }
   input:checked ~ .checkmark > .icon {
-    background: ${(props) => props.theme.color.primary.main};
+    background: ${(props) => props.theme.color.primary};
     width: 100%;
     height: 100%;
     display: block;
@@ -104,7 +118,7 @@ const RadioButtonWrapper = styled.label`
   }
   input:focus ~ .checkmark {
     // box-shadow: 0px 0px 0px 3px ${(props) =>
-      props.theme.color.primary.main}30 !important;
+      props.theme.color.primary}30 !important;
   }
 `;
 

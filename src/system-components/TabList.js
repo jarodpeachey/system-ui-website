@@ -16,12 +16,11 @@ const TabList = ({
     <Wrapper customStyles={customStyles}>
       <Flex hAlign="start">
         {children.map((child) => {
-          console.log(child.type.name);
-          const newProps = {
+          let newProps = {
             ...child.props,
-            onClick,
-            fullWidth,
-            indicatorColor,
+            onClick: onClick,
+            fullWidth: fullWidth,
+            indicatorColor: indicatorColor,
           };
           newProps.active = selectedTab === child.props.name;
 

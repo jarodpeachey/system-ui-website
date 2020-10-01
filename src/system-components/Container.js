@@ -1,21 +1,13 @@
 import React, { useContext } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-const Container = ({
-  children,
-  background,
-  className = '',
-  maxWidth,
-  style,
-  size,
-}) => {
+const Container = ({ className, id, children, customStyles, maxWidth }) => {
   return (
     <StyledContainer
-      maxWidth={maxWidth}
       className={className}
-      background={background}
-      style={style}
-      size={size}
+      id={id}
+      customStyles={customStyles}
+      maxWidth={maxWidth}
     >
       {children}
     </StyledContainer>
@@ -25,27 +17,18 @@ const Container = ({
 const StyledContainer = styled.div`
   width: 100%;
   margin: 0 auto;
-  max-width: ${(props) =>
-    props.maxWidth ?
-      props.maxWidth :
-      props.size === 'xs' ?
-      '769' :
-      props.size === 'sm' ?
-      '960' :
-      props.size === 'lg' ?
-      '1500' :
-      '1300'}px;
-  padding-left: 16px;
-  padding-right: 16px;
-  padding: 0 12px;
+  max-width: ${(props) => (props.maxWidth ? props.maxWidth : '1200')}px;
+  padding-left: 24px;
+  padding-right: 24px;
   @media (min-width: 576px) {
-    padding-left: 24px;
-    padding-right: 24px;
+    padding-left: 32px;
+    padding-right: 32px;
   }
   @media (min-width: 769px) {
-    padding-left: 48px;
-    padding-right: 48px;
+    padding-left: 64px;
+    padding-right: 64px;
   }
+  ${(props) => props.customStyles}
 `;
 
 export default Container;

@@ -1,14 +1,17 @@
 import React, { useState, useContext } from 'react';
 import styled, { css } from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ThemeContext } from '../components/theme';
 
-const MobileMenuItem = ({ children, submenu, align, icon }) => {
+const MobileMenuItem = ({ children, className, id, submenu, align, icon }) => {
   const [showMobileSubMenu, setShowMobileSubMenu] = useState(false);
   return (
     <>
       {submenu ? (
         <>
           <Wrapper
+            className={className}
+            id={id}
             onClick={() => {
               setShowMobileSubMenu(!showMobileSubMenu);
             }}
@@ -37,7 +40,9 @@ const MobileMenuItem = ({ children, submenu, align, icon }) => {
           </MobileSubMenuWrapper>
         </>
       ) : (
-        <Wrapper>{children}</Wrapper>
+        <Wrapper className={className} id={id}>
+          {children}
+        </Wrapper>
       )}
     </>
   );
@@ -50,10 +55,10 @@ const Wrapper = styled.div`
   transition-duration: 0.15s !important;
   width: 100%;
   svg {
-    color: ${(props) => props.theme.color.text.dark.one} !important;
-    fill: ${(props) => props.theme.color.text.dark.one} !important;
+    color: ${(props) => props.theme.color.text.heading} !important;
+    fill: ${(props) => props.theme.color.text.heading} !important;
   }
-  color: ${(props) => props.theme.color.text.dark.one};
+  color: ${(props) => props.theme.color.text.heading};
   ${(props) =>
     props.submenu &&
     css`
@@ -62,11 +67,11 @@ const Wrapper = styled.div`
       border-radius: ${props.theme.radius.one};
       transition-duration: 0.15s !important;
       :hover {
-        background: #00000010;
+        background: ${'#435a8e10'};
       }
       svg {
-        color: ${props.theme.color.text.dark.one} !important;
-        fill: ${props.theme.color.text.dark.one} !important;
+        color: ${props.theme.color.text.heading} !important;
+        fill: ${props.theme.color.text.heading} !important;
       }
     `};
   a {
@@ -74,29 +79,33 @@ const Wrapper = styled.div`
     width: ${(props) => (props.submenu ? 'fit-content' : '100%')};
     padding: ${(props) => (props.submenu ? 0 : '12px 16px')};
     text-decoration: none;
+    color: ${(props) => props.theme.color.text.heading};
     cursor: pointer;
-    color: ${(props) => props.theme.color.text.dark.one};
     background: ${(props) =>
-      props.submenu ? 'transparent' : props.open ? '#00000010' : 'transparent'};
+      props.submenu
+        ? 'transparent'
+        : props.open
+        ? '#435a8e10'
+        : 'transparent'};
     border-radius: ${(props) => props.theme.radius.one};
     transition-duration: 0.15s !important;
     :hover {
-      background: ${(props) => (props.submenu ? 'transparent' : '#00000010')};
+      background: ${(props) =>
+        props.submenu ? 'transparent' : '#435a8e10'};
     }
   }
 `;
 
 const MobileSubMenuWrapper = styled.div`
-  visibility: ${(props) => (props.open ? 'visible' : 'hidden')};
-  background: ${(props) => (props.open ? 'white' : 'transparent')};
-  opacity: ${(props) => (props.open ? 1 : 0)};
-  top: 0;
-  left: 0;
-  width: 100%;
+
+
+    -webkit-transition: all 0.15s;
+  -moz-transition: all 0.15s;
+  -ms-transition: all 0.15s;
+  -o-transition: all 0.15s;
   transition: all 0.15s;
-  padding: 0;
-  height: ${(props) => (props.open ? 'fit-content' : 0)};
-  z-index: -1;
+  overflow: hidden;
+  max-height: ${(props) => (props.open ? '130px' : '0')} !important;
 `;
 
 export default MobileMenuItem;

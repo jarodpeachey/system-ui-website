@@ -3,10 +3,14 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import PropTypes from 'prop-types';
 
-const Option = ({ children, value, selected, onClick }) => {
-  console.log(selected);
+const Option = ({ children, className, id, value, selected, onClick }) => {
   return (
-    <Wrapper onClick={() => onClick([value, children])} active={selected}>
+    <Wrapper
+      className={className}
+      id={id}
+      onClick={() => onClick([value, children])}
+      active={selected}
+    >
       {children}
     </Wrapper>
   );
@@ -17,13 +21,12 @@ const Wrapper = styled.div`
   cursor: pointer;
   :hover {
     background: ${(props) =>
-      props.active ? props.theme.color.primary.main : props.theme.color.gray.one};
+      props.active ? props.theme.color.primary : props.theme.color.gray.one};
   }
   color: ${(props) => (props.active ? 'white' : '')};
-  background: ${(props) =>
-    props.active ? props.theme.color.primary.main : ''};
+  background: ${(props) => (props.active ? props.theme.color.primary : '')};
   :active {
-    background: ${(props) => props.theme.color.primary.main};
+    background: ${(props) => props.theme.color.primary};
     color: white;
   }
 `;

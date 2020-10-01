@@ -2,23 +2,29 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 
 const Tab = ({
-  active,
   children,
+  className,
+  id,
+  active,
   onClick,
   name,
   customStyles,
   fullWidth,
   indicatorColor,
   activeStyles,
+  vertical
 }) => {
   return (
     <Wrapper
+      className={className}
+      id={id}
       customStyles={customStyles}
       activeStyles={activeStyles}
       onClick={() => onClick(name)}
       active={active}
       fullWidth={fullWidth}
       indicatorColor={indicatorColor}
+      vertical={vertical}
     >
       {children}
     </Wrapper>
@@ -33,10 +39,10 @@ const Wrapper = styled.div`
   padding: 12px 18px;
   text-align: center;
   cursor: pointer;
-  transition: 0.15s;
+  transition: 0.1s;
   border-bottom: 2px solid transparent;
   border-radius: 3px;
-  width: ${(props) => (props.fullWidth ? '100%' : 'fit-content')};
+  width: ${(props) => (props.fullWidth || props.vertical ? '100%' : 'fit-content')};
   :hover {
     background: ${(props) => props.theme.color.gray.one};
   }
@@ -44,12 +50,12 @@ const Wrapper = styled.div`
     props.active &&
     css`
       color: white;
-      background: ${props.theme.color.primary.main};
+      background: ${props.theme.color.primary};
       ${props.activeStyles};
       // box-shadow: ${props.theme.shadow.one};
       :hover {
         color: white;
-        background: ${props.theme.color.primary.main};
+        background: ${props.theme.color.primary};
         ${props.activeStyles};
         // box-shadow: ${props.theme.shadow.one};
       }

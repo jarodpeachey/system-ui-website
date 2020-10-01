@@ -2,13 +2,16 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import PropTypes from 'prop-types';
+import { calculateColor } from '../utils/color';
 
 const Checkbox = ({
-  onChange,
   children,
+  className,
+  id,
+  onChange,
   disabled,
   checked = false,
-  value = '',
+  icon = <FontAwesomeIcon icon="check" />,
 }) => {
   const [inputChecked, setInputChecked] = useState(checked);
 
@@ -16,18 +19,11 @@ const Checkbox = ({
 
   const customOnChange = (e) => {
     setInputChecked(!inputChecked);
-    console.log(inputChecked);
 
-    console.log('Target from component: ', e.target);
     e.target.checked = !inputChecked;
-    onChange &&
-      onChange({
-        ...e,
-        target: {
-          ...e.target,
-          checked: !inputChecked,
-        },
-      });
+    if (onChange) {
+      onChange(!inputChecked);
+    }
   };
 
   useEffect(() => {
@@ -35,28 +31,26 @@ const Checkbox = ({
   }, [inputChecked]);
 
   return (
-    <Wrapper>
-      <CheckboxWrapper
-        checked={inputChecked}
+    <CheckboxWrapper
+      className={className}
+      id={id}
+      checked={inputChecked}
+      disabled={disabled}
+      htmlFor={name}
+    >
+      <input
+        id={name}
+        onChange={customOnChange}
         disabled={disabled}
-        htmlFor={name}
-      >
-        <input
-          id={name}
-          onChange={customOnChange}
-          disabled={disabled}
-          name={name}
-          type="checkbox"
-          checked={inputChecked}
-        />
-        <span className="checkmark mr-2">
-          <div className="icon">
-            <FontAwesomeIcon icon="check" />
-          </div>
-        </span>
-        {children}
-      </CheckboxWrapper>
-    </Wrapper>
+        name={name}
+        type="checkbox"
+        checked={inputChecked}
+      />
+      <span className="checkmark mr-2">
+        <div className="icon">{icon}</div>
+      </span>
+      {children}
+    </CheckboxWrapper>
   );
 };
 
@@ -67,6 +61,7 @@ const Wrapper = styled.div`
 `;
 
 const CheckboxWrapper = styled.label`
+  width: fit-content;
   color: ${(props) => (props.disabled ? 'rgb(190, 190, 190)' : '')};
   display: block;
   position: relative;
@@ -94,16 +89,20 @@ const CheckboxWrapper = styled.label`
     border-radius: 2px;
     border: 1px solid
       ${(props) =>
-        props.disabled ? 'rgb(230, 230, 230)' : props.theme.color.gray.four};
+        props.disabled
+          ? props.theme.color.gray.two
+          : props.theme.color.gray.three};
     background: #ffffff;
     transition: 0.1s;
   }
   input:checked ~ .checkmark {
     background: ${(props) =>
-      props.disabled ? 'rgb(230, 230, 230)' : props.theme.color.primary.main};
+      props.disabled ? props.theme.color.gray.two : props.theme.color.primary};
     border: 1px solid
       ${(props) =>
-        props.disabled ? 'rgb(230, 230, 230)' : props.theme.color.primary.main};
+        props.disabled
+          ? props.theme.color.gray.two
+          : props.theme.color.primary};
   }
   .icon {
     display: none;
@@ -112,7 +111,7 @@ const CheckboxWrapper = styled.label`
   //   display: block;
   // }
   input:checked ~ .checkmark > .icon {
-    font-size: 11px;
+    font-size: 12px;
     color: white;
     top: 0px;
     position: relative;
@@ -121,19 +120,19 @@ const CheckboxWrapper = styled.label`
   }
   // input:focus ~ .checkmark {
   //   box-shadow: 0px 0px 0px 3px ${(props) =>
-    props.theme.color.primary.main}30 !important;
+    props.theme.color.primary}30 !important;
   // }
-    input:hover ~ .checkmark {
-    border: 1px solid ${(props) =>
-      props.disabled ?
-        'rgb(230, 230, 230)' :
-        `${props.theme.color.primary.main}60`};
+  input:hover ~ .checkmark {
+    border: 1px solid
+      ${(props) =>
+        props.disabled ? 'rgb(230, 230, 230)' : props.theme.color.gray.two};
   }
-    input:checked:hover ~ .checkmark {
-    border: 1px solid ${(props) =>
-      props.disabled ?
-        'rgb(230, 230, 230)' :
-        `${props.theme.color.primary.main}`};
+  input:checked:hover ~ .checkmark {
+    border: 1px solid
+      ${(props) =>
+        props.disabled
+          ? props.theme.color.gray.two
+          : `${props.theme.color.primary}`};
   }
 `;
 

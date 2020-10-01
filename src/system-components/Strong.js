@@ -1,21 +1,30 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 
-const Paragraph = ({ children, className, id, color, customStyles, size }) => {
+const Strong = ({
+  children,
+  className,
+  id,
+  title,
+  color,
+  muted,
+  customStyles,
+}) => {
   return (
-    <StyledParagraph
+    <StyledStrong
       className={className}
       id={id}
       customStyles={customStyles}
       color={color}
-      size={size}
+      title={title}
+      muted={muted}
     >
       {children}
-    </StyledParagraph>
+    </StyledStrong>
   );
 };
 
-const StyledParagraph = styled.p`
+const StyledStrong = styled.strong`
   color: ${(props) =>
     props.color === 'primary'
       ? props.theme.color.primary
@@ -25,11 +34,11 @@ const StyledParagraph = styled.p`
       ? props.theme.color.success
       : props.color === 'error'
       ? props.theme.color.error
-      : props.color === 'one'
+      : props.color === 'text-one'
       ? props.theme.color.text.one
-      : props.color === 'two'
+      : props.color === 'text-two'
       ? props.theme.color.text.two
-      : props.color === 'three'
+      : props.color === 'text-three'
       ? props.theme.color.text.three
       : props.color === 'light-one'
       ? props.theme.color.text.light.one
@@ -38,20 +47,11 @@ const StyledParagraph = styled.p`
       : props.color === 'light-three'
       ? props.theme.color.text.light.three
       : props.theme.color.text.paragraph}};
-        line-height: 1.7;
-  font-size: ${(props) =>
-    props.size === 'sm'
-      ? props.theme.fontSize.small
-      : props.size === 'lg'
-      ? props.theme.fontSize.h5
-      : props.theme.fontSize.p}px;
-  font-weight: 400;
   ${(props) =>
     props.customStyles &&
     css`
       ${props.customStyles}
     `}
-
 `;
 
-export default Paragraph;
+export default Strong;

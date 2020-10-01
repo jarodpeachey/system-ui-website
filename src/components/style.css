@@ -1,105 +1,31 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;&display=swap');
 
-:root {
-  --spacing-one: 4px;
-  --spacing-two: 8px;
-  --spacing-three: 14px;
-  --spacing-four: 22px;
-  --spacing-five: 32px;
-  --spacing-six: 44px;
-  --spacing-seven: 64px;
-
-  --font-one: 46px;
-  --font-two: 36px;
-  --font-three: 27px;
-  --font-four: 21px;
-  --font-five: 16px;
-  --font-six: 13px;
-
-  --primary: #b4267c;
-
-  --dark-one: #2c2f3b;
-  --dark-two: #5d647e;
-  --dark-three: #b5b9c1;
-
-  --light-one: #ffffff;
-  --light-two: #ffffffaa;
-  --light-three: #ffffff80;
-}
 * {
   box-sizing: border-box;
   transition-delay: 0s !important;
 }
 html,
-body {
-  font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+body, input, select {
+  font-family: 'Nunito Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI',
     Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   margin: 0;
   padding: 0;
   overflow-x: hidden;
-  color: var(--dark-two);
+  font-size: 16px;
 }
 body {
   overflow: hidden;
 }
-.container,
-.container-xs {
-  width: 100%;
-  margin: 0 auto;
-  padding-left: 16px;
-  padding-right: 16px;
-  padding: 0 12px;
-}
-.container.self {
-  /* width: calc(90% - 24px) !important; */
-  margin: 0 auto;
-  margin-left: 24px;
-  padding: 0;
-  width: calc(100% - 48px);
-  padding-right: 24px;
-}
-@media (min-width: 481px) {
-  .container,
-  .container-xs {
-    padding-left: 24px;
-    padding-right: 24px;
-  }
-}
-.container {
-  max-width: 1300px;
-}
-.container-xs {
-  max-width: 668px;
-}
-[class*='container'] .container-xs {
-  max-width: 620px;
-}
 
-@media (min-width: 769px) {
-  .container {
-    padding-left: 48px;
-    padding-right: 48px;
-  }
-  .container.self {
-    /* width: calc(90% - 24px) !important; */
-    margin: 0 auto;
-    margin-left: 48px;
-    padding: 0;
-    width: calc(100% - 96px);
-    padding-right: calc(100vw * 0.1);
-  }
-}
-@media (min-width: 1300px) {
-  .container.self {
-    margin: 0 auto;
-    width: 100%;
-    padding: 0px 48px;
-    padding-right: calc(100vw * 0.25);
-  }
-}
-
-.transition {
-  transition-duration: 0.15s;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6, button {
+  font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 label,
@@ -108,33 +34,6 @@ div {
   font-size: 16px;
 }
 
-
-strong {
-  font-weight: 600;
-}
-textarea {
-  margin: 0;
-  padding: 0;
-  display: block;
-  height: 100%;
-}
-a {
-  transition: 0 !important;
-  transition-duration: 0s !important;
-  transition-delay: 0s !important;
-}
-p:last-child {
-  margin-bottom: 0;
-}
-.bold {
-  font-weight: bold !important;
-}
-.display-block {
-  display: block !important;
-}
-.cursor-pointer {
-  cursor: pointer !important;
-}
 .right {
   text-align: right;
   margin-left: auto;
@@ -152,46 +51,6 @@ p:last-child {
 }
 .no-styling {
   text-decoration: none !important;
-}
-.width-auto {
-  width: fit-content !important;
-}
-.ml-10 {
-  margin-left: 10% !important;
-}
-.mr-10 {
-  margin-right: 10% !important;
-}
-.tablet-mr-10 {
-  @media (min-width: 769px) {
-    margin-right: 10% !important;
-  }
-}
-.tablet-ml-10 {
-  @media (min-width: 769px) {
-    margin-left: 10% !important;
-  }
-}
-.border-none {
-  border: 0 !important;
-}
-.dark-1 {
-  color: var(--dark-one) !important;
-}
-.dark-2 {
-  color: var(--dark-two) !important;
-}
-.dark-3 {
-  color: var(--dark-three) !important;
-}
-.light-1 {
-  color: var(--light-one) !important;
-}
-.light-2 {
-  color: var(--light-two) !important;
-}
-.light-3 {
-  color: var(--light-three) !important;
 }
 .m-none {
   margin: 0 !important;
@@ -565,27 +424,4 @@ p:last-child {
 }
 .pr-7 {
   padding-right: var(--spacing-seven) !important;
-}
-
-[style*='-aspect-ratio'] > :first-child {
-  width: 100%;
-}
-[style*='-aspect-ratio'] > img {
-  height: auto;
-}
-@supports (--custom: property) {
-  [style*='-aspect-ratio'] {
-    position: relative;
-  }
-  [style*='-aspect-ratio']::before {
-    content: '';
-    display: block;
-    padding-bottom: calc(100% / (var(--aspect-ratio)));
-  }
-  [style*='-aspect-ratio'] > :first-child {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-  }
 }

@@ -1,24 +1,29 @@
 import React, { useContext } from 'react';
 import styled, { css } from 'styled-components';
-import Heading from './Heading';
+import { ThemeContext } from '../components/theme';
+import H4 from './H4';
 
 const Info = ({
   children,
+  className,
+  id,
   title,
   icon,
-  className = '',
   variant,
   color,
   layout,
   align,
 }) => {
+  const theme = useContext(ThemeContext);
+
   return (
     <StyledInfo
+      className={className}
+      id={id}
       layout={layout}
       variant={variant}
       color={color}
       align={align}
-      className={className}
     >
       {icon && (
         <Icon layout={layout} align={align} color={color} variant={variant}>
@@ -26,7 +31,7 @@ const Info = ({
         </Icon>
       )}
       <div>
-        {title && <Heading type="h3">{title}</Heading>}
+        {title && <H4>{title}</H4>}
         {children}
       </div>
     </StyledInfo>
@@ -52,11 +57,11 @@ const StyledInfo = styled.div`
           ${props.theme.spacing.five}px ${props.theme.spacing.five}px;
       `)};
   text-align: ${(props) =>
-    props.align === 'left' || props.layout === 'horizontal' ?
-      'left' :
-      props.align === 'right' ?
-      'right' :
-      'center'};
+    props.align === 'left' || props.layout === 'horizontal'
+      ? 'left'
+      : props.align === 'right'
+      ? 'right'
+      : 'center'};
   p,
   div {
     font-size: 18px;
@@ -68,15 +73,15 @@ const StyledInfo = styled.div`
   ${(props) =>
     props.variant === 'filled' &&
     css`
-      background: ${props.color === 'primary' ?
-        props.theme.color.primary.main :
-        props.color === 'secondary' ?
-        props.theme.color.secondary.main :
-        props.color === 'success' ?
-        props.theme.color.success :
-        props.color === 'error' ?
-        props.theme.color.error :
-        'white'};
+      background: ${props.color === 'primary'
+        ? props.theme.color.primary
+        : props.color === 'secondary'
+        ? props.theme.color.secondary
+        : props.color === 'success'
+        ? props.theme.color.success
+        : props.color === 'error'
+        ? props.theme.color.error
+        : 'white'};
       h1,
       h2,
       h3,
@@ -92,15 +97,15 @@ const StyledInfo = styled.div`
   ${(props) =>
     props.variant === 'light' &&
     css`
-      background: ${props.color === 'primary' ?
-        props.theme.color.primary.main :
-        props.color === 'secondary' ?
-        props.theme.color.secondary.main :
-        props.color === 'success' ?
-        props.theme.color.success :
-        props.color === 'error' ?
-        props.theme.color.error :
-        'white'}15;
+      background: ${props.color === 'primary'
+        ? props.theme.color.primary
+        : props.color === 'secondary'
+        ? props.theme.color.secondary
+        : props.color === 'success'
+        ? props.theme.color.success
+        : props.color === 'error'
+        ? props.theme.color.error
+        : 'white'}15;
 
       p {
         color: ${props.color ? '#000000bb' : null};
@@ -113,7 +118,7 @@ const Icon = styled.div`
     props.align === 'left' || props.align === 'right' ? 0 : '0 auto'};
   margin-left: ${(props) => (props.align === 'right' ? 'auto' : null)};
   width: fit-content;
-  color: ${(props) => props.theme.color.primary.main};
+  color: ${(props) => props.theme.color.primary};
   svg {
     font-size: 42px;
   }
@@ -121,15 +126,15 @@ const Icon = styled.div`
     props.layout === 'horizontal' ? `${props.theme.spacing.five - 6}px` : null};
 
   color: ${(props) =>
-    props.color === 'primary' ?
-      props.theme.color.primary.main :
-      props.color === 'secondary' ?
-      props.theme.color.secondary.main :
-      props.color === 'success' ?
-      props.theme.color.success :
-      props.color === 'error' ?
-      props.theme.color.error :
-      props.theme.color.text.dark.one};
+    props.color === 'primary'
+      ? props.theme.color.primary
+      : props.color === 'secondary'
+      ? props.theme.color.secondary
+      : props.color === 'success'
+      ? props.theme.color.success
+      : props.color === 'error'
+      ? props.theme.color.error
+      : props.theme.color.text.heading};
   ${(props) =>
     props.variant === 'filled' &&
     css`

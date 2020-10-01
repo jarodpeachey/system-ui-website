@@ -1,48 +1,55 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 
-const H5 = ({
-  children,
-  className = '',
-  customStyles,
-  color,
-  background,
-  display,
-}) => {
+const H5 = ({ children, className, id, customStyles, display, color }) => {
   return (
-    <StyledH5
-      background={background}
-      color={color}
-      customStyles={customStyles}
+    <Wrapper
       className={className}
+      id={id}
+      customStyles={customStyles}
+      color={color}
       display={display}
     >
       {children}
-    </StyledH5>
+    </Wrapper>
   );
 };
 
-const StyledH5 = styled.h5`
+const Wrapper = styled.h5`
   color: ${(props) =>
-    props.color === 'primary' ?
-      props.theme.color.primary.main :
-      props.color === 'secondary' ?
-      props.theme.color.secondary.main :
-      props.color === 'success' ?
-      props.theme.color.success :
-      props.color === 'error' ?
-      props.theme.color.error :
-      props.background === 'dark' ?
-      props.theme.color.text.light.one :
-      props.theme.color.text.dark.one};
+    props.color === 'primary'
+      ? props.theme.color.primary
+      : props.color === 'secondary'
+      ? props.theme.color.secondary
+      : props.color === 'success'
+      ? props.theme.color.success
+      : props.color === 'error'
+      ? props.theme.color.error
+      : props.color === 'text-one'
+      ? props.theme.color.text.one
+      : props.color === 'text-two'
+      ? props.theme.color.text.two
+      : props.color === 'text-three'
+      ? props.theme.color.text.three
+      : props.color === 'light-one'
+      ? props.theme.color.text.light.one
+      : props.color === 'light-two'
+      ? props.theme.color.text.light.two
+      : props.color === 'light-three'
+      ? props.theme.color.text.light.three
+      : props.theme.color.text.heading}};
+
+  font-weight: 600;
+  margin-bottom: 32px;
+  font-size: ${(props) => props.theme.fontSize.h5 - 2}px;
+  @media(min-width: 769px) {
+    font-size: ${(props) => props.theme.fontSize.h5}px;
+  }
   ${(props) =>
     props.customStyles &&
     css`
       ${props.customStyles}
     `}
-  text-transform: ${(props) =>
-    props.display === 'title' ? 'uppercase' : null};
-  font-weight: ${(props) => (props.display === 'subtitle' ? 'normal' : null)};
 `;
 
 export default H5;

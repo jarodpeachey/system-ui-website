@@ -1,12 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
+import Container from './Container';
 
-const Hero = ({ children, background }) => (
-  <Wrapper>
+const Hero = ({ children, className, id, customStyles, background }) => (
+  <Wrapper customStyles={customStyles} className={className} id={id}>
     <Background background={background}>
       <div />
     </Background>
-    <Container className="container">
+    <Container>
       <div>{children}</div>
     </Container>
   </Wrapper>
@@ -15,10 +16,7 @@ const Hero = ({ children, background }) => (
 const Wrapper = styled.div`
   position: relative;
   padding: 120px 0;
-  p {
-    line-height: 30px;
-    font-size: 24px !important;
-  }
+  ${(props) => props.customStyles}
 `;
 
 const Background = styled.div`
@@ -37,11 +35,11 @@ const Background = styled.div`
   z-index: -1;
 `;
 
-const Container = styled.div`
-  overflow: hidden;
-  margin: 0 auto;
-  z-index: 0;
-`;
+// const Container = styled.div`
+//   overflow: hidden;
+//   margin: 0 auto;
+//   z-index: 0;
+// `;
 
 const Close = styled.div`
   font-size: 20px;

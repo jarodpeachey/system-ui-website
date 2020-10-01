@@ -24,19 +24,9 @@ import {
   faMousePointer,
 } from '@fortawesome/free-solid-svg-icons';
 import { fab, faTwitter } from '@fortawesome/free-brands-svg-icons';
-import NavbarItem from '../system-components/NavbarItem';
-import SubMenuItem from '../system-components/SubMenuItem';
-import SubMenu from '../system-components/SubMenu';
-import Tablet from '../system-components/Tablet';
-import Mobile from '../system-components/Mobile';
-import Navbar from '../system-components/Navbar';
-import MobileSubMenuItem from '../system-components/MobileSubMenuItem';
-import MobileMenuItem from '../system-components/MobileMenuItem';
-import MobileMenu from '../system-components/MobileMenu';
-import MobileSubMenu from '../system-components/MobileSubMenu';
 import Header from '../system-components/Header';
+import H1 from '../system-components/H1';
 import { theme } from './theme';
-import Heading from '../system-components/Heading';
 import './style.css';
 
 library.add(
@@ -64,68 +54,17 @@ library.add(
 const Layout = ({ children }) => (
   <ThemeProvider theme={theme}>
     <Wrapper>
-      <Header fixed color="transparent">
-        <Heading type="h1" className="m-none">
-          System
-        </Heading>
-        <Mobile>
-          <MobileMenu>
-            <MobileMenuItem>
-              <Link to="/">Home</Link>
-            </MobileMenuItem>
-            <MobileMenuItem>
-              <Link to="#sign-up">Sign Up</Link>
-            </MobileMenuItem>
-            {/* <MobileMenuItem submenu>
-              <Link to="/components">Components</Link>
-              <MobileSubMenu>
-                <MobileSubMenuItem>
-                  <Link to="/components/layout">Layout</Link>
-                </MobileSubMenuItem>
-                <MobileSubMenuItem>
-                  <Link to="/components/inputs">Inputs</Link>
-                </MobileSubMenuItem>
-                <MobileSubMenuItem>
-                  <Link to="/components/display">Display</Link>
-                </MobileSubMenuItem>
-              </MobileSubMenu>
-            </MobileMenuItem> */}
-          </MobileMenu>
-        </Mobile>
-        <Tablet>
-          <Navbar>
-            <NavbarItem>
-              <Link to="/">Home</Link>
-            </NavbarItem>
-            <NavbarItem>
-              <Link to="#sign-up">Sign Up</Link>
-            </NavbarItem>
-            {/* <NavbarItem submenu>
-              <Link to="/components">Components</Link>
-              <SubMenu>
-                <SubMenuItem>
-                  <Link to="/components/layout">Layout</Link>
-                </SubMenuItem>
-                <SubMenuItem>
-                  <Link to="/components/inputs">Inputs</Link>
-                </SubMenuItem>
-                <SubMenuItem>
-                  <Link to="/components/display">Display</Link>
-                </SubMenuItem>
-              </SubMenu>
-            </NavbarItem> */}
-            {/* <NavbarItem square>
-              <a href="/">
-                <FontAwesomeIcon
-                  icon="heart"
-                  style={{ width: 20, height: 20, fontSize: 24 }}
-                />
-              </a>
-            </NavbarItem> */}
-          </Navbar>
-        </Tablet>
+      <Header color="white" height={100}>
+        <H1
+          customStyles={
+            'font-size: 24px; @media(min-width: 769px){font-size: 30px;} position: relative; top: -1px;'
+          }
+          className="m-none"
+        >
+          SystemUI
+        </H1>
       </Header>
-      {children}
+      <>{children}</>
     </Wrapper>
   </ThemeProvider>
 );

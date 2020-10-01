@@ -2,46 +2,61 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
-import { Link } from 'gatsby';
 import { theme } from '../components/theme';
 import { pSBC } from '../utils/color';
+import { Link } from '@reach/router';
 
 const Button = ({
   children,
-  className = '',
+  className,
+  id,
   onClick,
   link,
   color,
-  variant = '',
+  variant,
   size,
   customStyles,
   fullWidth,
+  external,
 }) => (
   <>
-    {link ? (
-      <Link
+    {link && external ? (
+      <StyledA
         to={link}
-        className={`${className} no-styling ${fullWidth ? 'full-width' : null}`}
-      >
-        <StyledButton
-          color={color}
-          size={size}
-          variant={variant}
-          className={className}
-          onClick={onClick || null}
-          link
-          customStyles={customStyles}
-          fullWidth={fullWidth}
-        >
-          {children}
-        </StyledButton>
-      </Link>
-    ) : (
-      <StyledButton
+        className={`no-styling ${className}`}
+        id={id}
         color={color}
         size={size}
         variant={variant}
+        onClick={onClick || null}
+        link
+        customStyles={customStyles}
+        fullWidth={fullWidth}
+      >
+        {children}
+      </StyledA>
+    ) : link ? (
+      <StyledLink
+        to={link}
+        className={`no-styling ${className}`}
+        id={id}
+        color={color}
+        size={size}
+        variant={variant}
+        onClick={onClick || null}
+        link
+        customStyles={customStyles}
+        fullWidth={fullWidth}
+      >
+        {children}
+      </StyledLink>
+    ) : (
+      <StyledButton
         className={className}
+        id={id}
+        color={color}
+        size={size}
+        variant={variant}
         onClick={onClick || null}
         customStyles={customStyles}
         fullWidth={fullWidth}
@@ -54,144 +69,172 @@ const Button = ({
 
 const StyledButton = styled.button`
   box-shadow: ${(props) =>
-    props.variant === 'secondary' ? props.theme.shadow.two : 'none'};
+    props.color === 'primary' ||
+    props.color === 'secondary' ||
+    props.color === 'success' ||
+    props.color === 'error' ||
+    props.color === 'white' ||
+    props.color === 'dark'
+      ? props.theme.shadow.button
+      : '3px 3px 18px -6px #0000001a'};
+  font-weight: 600;
   outline: none;
   padding: 12px 24px;
   border: none;
   width: ${(props) => (props.fullWidth ? '100%' : null)};
   font-size: 16px;
   // font-weight: 500;
-  letter-spacing: 1.1px;
+  letter-spacing: 1.4px;
   padding: ${(props) =>
-    props.size === 'small' ?
-      '8px 12px' :
-      props.size === 'large' ?
-      '16px 29px' :
-      '12px 18px'};
-    
-  height: ${(props) => (props.size === 'large' ? '54px' : null)};
+    props.size === 'small'
+      ? '8px 18px'
+      : props.size === 'large'
+      ? '20px 30px'
+      : '14px 26px'};
+
   font-size: ${(props) =>
-    props.size === 'small' ? '14px' : props.size === 'large' ? '18px' : '16px'};
+    props.size === 'small' ? '16px' : props.size === 'large' ? '18px' : '17px'};
   border-radius: ${(props) => props.theme.radius.one};
   cursor: pointer;
   transition: all 0.25s;
+  // text-transform: uppercase;
   :active {
     box-shadow: none !important;
   }
 
-        background: ${(props) =>
-          props.color === 'primary' ?
-            props.theme.color.primary.main :
-            props.color === 'secondary' ?
-            props.theme.color.secondary.main :
-            props.color === 'success' ?
-            props.theme.color.success :
-            props.color === 'error' ?
-            props.theme.color.error :
-            props.color === 'white' ?
-            'white' :
-            props.theme.color.gray.one};   
+  background: ${(props) =>
+    props.color === 'primary'
+      ? props.theme.color.primary
+      : props.color === 'secondary'
+      ? props.theme.color.secondary
+      : props.color === 'success'
+      ? props.theme.color.success
+      : props.color === 'error'
+      ? props.theme.color.error
+      : props.color === 'white'
+      ? 'white'
+      : props.color === 'dark'
+      ? props.theme.color.gray.six
+      : props.theme.color.gray.two};
+  color: ${(props) =>
+    props.color === 'white'
+      ? props.theme.color.text.heading
+      : props.color === 'primary' ||
+        props.color === 'secondary' ||
+        props.color === 'success' ||
+        props.color === 'error' ||
+        props.color === 'dark'
+      ? 'white'
+      : props.theme.color.text.heading};
+  * {
     color: ${(props) =>
-      props.color === 'white' ?
-        '' :
-        props.color === 'primary' ||
+      props.color === 'white'
+        ? props.theme.color.text.heading
+        : props.color === 'primary' ||
           props.color === 'secondary' ||
           props.color === 'success' ||
-          props.color === 'error' ?
-        'white' :
-        props.theme.color.text.dark.one};
-      * {
-            color: ${(props) =>
-              props.color === 'white' ?
-                '' :
-                props.color === 'primary' ||
-                  props.color === 'secondary' ||
-                  props.color === 'success' ||
-                  props.color === 'error' ?
-                'white' :
-                props.theme.color.text.dark.one};
-      }
-      border: 1px solid transparent;
-      :hover {
-        background: ${(props) =>
-          props.color === 'primary' ?
-            pSBC(props.theme.color.primary.main, -25) :
-            props.color === 'secondary' ?
-            pSBC(props.theme.color.secondary.main, -25) :
-            props.color === 'success' ?
-            pSBC(props.theme.color.success, -25) :
-            props.color === 'error' ?
-            pSBC(props.theme.color.error, -25) :
-            props.color === 'white' ?
-            pSBC('#ffffff', -25) :
-            props.theme.color.gray.two};
-        // color: ${(props) => (props.color === 'white' ? 'initial' : 'white')};
-      }
-
+          props.color === 'error' ||
+          props.color === 'dark'
+        ? 'white'
+        : props.theme.color.text.heading};
+  }
+  border: 1px solid transparent;
+  :hover {
+    box-shadow: ${(props) =>
+      props.color === 'primary' ||
+      props.color === 'secondary' ||
+      props.color === 'success' ||
+      props.color === 'error' ||
+      props.color === 'white' ||
+      props.color === 'dark'
+        ? props.theme.shadow.buttonHover
+        : '3px 3px 18px -6px #00000021'};
+    background: ${(props) =>
+      props.color === 'primary'
+        ? pSBC(props.theme.color.primary, -25)
+        : props.color === 'secondary'
+        ? pSBC(props.theme.color.secondary, -25)
+        : props.color === 'success'
+        ? pSBC(props.theme.color.success, -25)
+        : props.color === 'error'
+        ? pSBC(props.theme.color.error, -25)
+        : props.color === 'white'
+        ? pSBC('#ffffff', -25)
+        : props.color === 'dark'
+        ? pSBC(props.theme.color.gray.six, -25)
+        : pSBC(props.theme.color.gray.two, -10)};
+    // color: ${(props) => (props.color === 'white' ? 'initial' : 'white')};
+  }
 
   ${(props) =>
     props.variant === 'outlined' &&
     css`
       background: transparent;
-      color: ${props.color === 'primary' ?
-        props.theme.color.primary.main :
-        props.color === 'secondary' ?
-        props.theme.color.secondary.main :
-        props.color === 'success' ?
-        props.theme.color.success :
-        props.color === 'error' ?
-        props.theme.color.error :
-        props.color === 'white' ?
-        'white' :
-        ''};
+      box-shadow: none;
+      color: ${props.color === 'primary'
+        ? props.theme.color.primary
+        : props.color === 'secondary'
+        ? props.theme.color.secondary
+        : props.color === 'success'
+        ? props.theme.color.success
+        : props.color === 'error'
+        ? props.theme.color.error
+        : props.color === 'white'
+        ? 'white'
+        : props.theme.color.text.heading} !important;
       * {
-        color: ${props.color === 'primary' ?
-          props.theme.color.primary.main :
-          props.color === 'secondary' ?
-          props.theme.color.secondary.main :
-          props.color === 'success' ?
-          props.theme.color.success :
-          props.color === 'error' ?
-          props.theme.color.error :
-          props.color === 'white' ?
-          'white' :
-          ''};
+        color: ${props.color === 'primary'
+          ? props.theme.color.primary
+          : props.color === 'secondary'
+          ? props.theme.color.secondary
+          : props.color === 'success'
+          ? props.theme.color.success
+          : props.color === 'error'
+          ? props.theme.color.error
+          : props.color === 'white'
+          ? 'white'
+          : props.theme.color.text.heading} !important;
       }
       border: 1px solid
-        ${props.color === 'primary' ?
-          props.theme.color.primary.main :
-          props.color === 'secondary' ?
-          props.theme.color.secondary.main :
-          props.color === 'success' ?
-          props.theme.color.success :
-          props.color === 'error' ?
-          props.theme.color.error :
-          props.color === 'white' ?
-          'white' :
-          props.theme.color.gray.two};
+        ${props.color === 'primary'
+          ? props.theme.color.primary
+          : props.color === 'secondary'
+          ? props.theme.color.secondary
+          : props.color === 'success'
+          ? props.theme.color.success
+          : props.color === 'error'
+          ? props.theme.color.error
+          : props.color === 'white'
+          ? 'white'
+          : props.color === 'dark'
+          ? props.theme.color.gray.six
+          : pSBC(props.theme.color.gray.two, -0)};
       :hover {
-        background: ${props.color === 'primary' ?
-          props.theme.color.primary.main :
-          props.color === 'secondary' ?
-          props.theme.color.secondary.main :
-          props.color === 'success' ?
-          props.theme.color.success :
-          props.color === 'error' ?
-          props.theme.color.error :
-          props.color === 'white' ?
-          'white' :
-          props.theme.color.gray.two};
-        color: ${props.color === 'white' ?
-          'initial' :
-          props.color ?
-          'white' :
-          ''};
+        box-shadow: ${props.theme.shadow.button};
+        background: ${props.color === 'primary'
+          ? props.theme.color.primary
+          : props.color === 'secondary'
+          ? props.theme.color.secondary
+          : props.color === 'success'
+          ? props.theme.color.success
+          : props.color === 'error'
+          ? props.theme.color.error
+          : props.color === 'white'
+          ? 'white'
+          : props.color === 'dark'
+          ? props.theme.color.gray.six
+          : props.theme.color.gray.two};
+        color: ${props.color === 'white'
+          ? 'initial'
+          : props.color
+          ? 'white'
+          : props.theme.color.text.heading} !important;
         * {
-          color: ${props.color === 'white' ?
-            'initial' :
-            props.color ?
-            'white' :
-            ''};
+          color: ${props.color === 'white'
+            ? 'initial'
+            : props.color
+            ? 'white'
+            : props.theme.color.text.heading} !important;
         }
       }
     `};
@@ -200,57 +243,503 @@ const StyledButton = styled.button`
     props.variant === 'plain' &&
     css`
       background: transparent;
-      color: ${
-        props.color === 'primary' ?
-          props.theme.color.primary.main :
-          props.color === 'secondary' ?
-          props.theme.color.secondary.main :
-          props.color === 'success' ?
-          props.theme.color.success :
-          props.color === 'error' ?
-          props.theme.color.error :
-          props.color === 'white' ?
-          'white' :
-          ''
-      };
-    * {
-            color: ${
-              props.color === 'primary' ?
-                props.theme.color.primary.main :
-                props.color === 'secondary' ?
-                props.theme.color.secondary.main :
-                props.color === 'success' ?
-                props.theme.color.success :
-                props.color === 'error' ?
-                props.theme.color.error :
-                props.color === 'white' ?
-                'white' :
-                ''
-            };
-    }
+      box-shadow: none;
+      color: ${props.color === 'primary'
+        ? props.theme.color.primary
+        : props.color === 'secondary'
+        ? props.theme.color.secondary
+        : props.color === 'success'
+        ? props.theme.color.success
+        : props.color === 'error'
+        ? props.theme.color.error
+        : props.color === 'white'
+        ? 'white'
+        : props.theme.color.text.heading} !important;
+      * {
+        color: ${props.color === 'primary'
+          ? props.theme.color.primary
+          : props.color === 'secondary'
+          ? props.theme.color.secondary
+          : props.color === 'success'
+          ? props.theme.color.success
+          : props.color === 'error'
+          ? props.theme.color.error
+          : props.color === 'white'
+          ? 'white'
+          : props.theme.color.text.heading} !important;
+      }
       border: 1px solid transparent;
       :hover {
-        background: ${
-          props.color === 'primary' ?
-            `${props.theme.color.primary.main}15` :
-            props.color === 'secondary' ?
-            `${props.theme.color.secondary.main}15` :
-            props.color === 'success' ?
-            `${props.theme.color.success}15` :
-            props.color === 'error' ?
-            `${props.theme.color.error}15` :
-            props.color === 'white' ?
-            '#ffffff10' :
-            props.theme.color.gray.one
-        };
+        box-shadow: none;
+        background: ${props.color === 'primary'
+          ? `${props.theme.color.primary}15`
+          : props.color === 'secondary'
+          ? `${props.theme.color.secondary}15`
+          : props.color === 'success'
+          ? `${props.theme.color.success}15`
+          : props.color === 'error'
+          ? `${props.theme.color.error}15`
+          : props.color === 'white'
+          ? '#ffffff10'
+          : props.theme.color.gray.one};
         // color: ${props.color === 'white' ? 'initial' : 'white'};
       }
     `};
-    ${(props) =>
-      props.customStyles &&
-      css`
-        ${props.customStyles}
-      `};
+  ${(props) =>
+    props.customStyles &&
+    css`
+      ${props.customStyles}
+    `};
+`;
+
+const StyledLink = styled(Link)`
+  box-shadow: ${(props) =>
+    props.color === 'primary' ||
+    props.color === 'secondary' ||
+    props.color === 'success' ||
+    props.color === 'error' ||
+    props.color === 'white' ||
+    props.color === 'dark'
+      ? props.theme.shadow.button
+      : '3px 3px 18px -6px #0000001a'};
+  font-weight: 600;
+  outline: none;
+  padding: 12px 24px;
+  border: none;
+  width: ${(props) => (props.fullWidth ? '100%' : null)};
+  font-size: 16px;
+  // font-weight: 500;
+  letter-spacing: 1.4px;
+  padding: ${(props) =>
+    props.size === 'small'
+      ? '6px 18px'
+      : props.size === 'large'
+      ? '18px 30px'
+      : '12px 26px'};
+
+  font-size: ${(props) =>
+    props.size === 'small' ? '16px' : props.size === 'large' ? '18px' : '17px'};
+  border-radius: ${(props) => props.theme.radius.one};
+  cursor: pointer;
+  transition: all 0.25s;
+  // text-transform: uppercase;
+  :active {
+    box-shadow: none !important;
+  }
+
+  background: ${(props) =>
+    props.color === 'primary'
+      ? props.theme.color.primary
+      : props.color === 'secondary'
+      ? props.theme.color.secondary
+      : props.color === 'success'
+      ? props.theme.color.success
+      : props.color === 'error'
+      ? props.theme.color.error
+      : props.color === 'white'
+      ? 'white'
+      : props.color === 'dark'
+      ? props.theme.color.gray.six
+      : props.theme.color.gray.two};
+  color: ${(props) =>
+    props.color === 'white'
+      ? props.theme.color.text.heading
+      : props.color === 'primary' ||
+        props.color === 'secondary' ||
+        props.color === 'success' ||
+        props.color === 'error' ||
+        props.color === 'dark'
+      ? 'white'
+      : props.theme.color.text.heading};
+  * {
+    color: ${(props) =>
+      props.color === 'white'
+        ? props.theme.color.text.heading
+        : props.color === 'primary' ||
+          props.color === 'secondary' ||
+          props.color === 'success' ||
+          props.color === 'error' ||
+          props.color === 'dark'
+        ? 'white'
+        : props.theme.color.text.heading};
+  }
+  border: 1px solid transparent;
+  :hover {
+    box-shadow: ${(props) =>
+      props.color === 'primary' ||
+      props.color === 'secondary' ||
+      props.color === 'success' ||
+      props.color === 'error' ||
+      props.color === 'white' ||
+      props.color === 'dark'
+        ? props.theme.shadow.buttonHover
+        : '3px 3px 18px -6px #00000021'};
+    background: ${(props) =>
+      props.color === 'primary'
+        ? pSBC(props.theme.color.primary, -25)
+        : props.color === 'secondary'
+        ? pSBC(props.theme.color.secondary, -25)
+        : props.color === 'success'
+        ? pSBC(props.theme.color.success, -25)
+        : props.color === 'error'
+        ? pSBC(props.theme.color.error, -25)
+        : props.color === 'white'
+        ? pSBC('#ffffff', -25)
+        : props.color === 'dark'
+        ? pSBC(props.theme.color.gray.six, -25)
+        : pSBC(props.theme.color.gray.two, -10)};
+    // color: ${(props) => (props.color === 'white' ? 'initial' : 'white')};
+  }
+
+  ${(props) =>
+    props.variant === 'outlined' &&
+    css`
+      background: transparent;
+      box-shadow: none;
+      color: ${props.color === 'primary'
+        ? props.theme.color.primary
+        : props.color === 'secondary'
+        ? props.theme.color.secondary
+        : props.color === 'success'
+        ? props.theme.color.success
+        : props.color === 'error'
+        ? props.theme.color.error
+        : props.color === 'white'
+        ? 'white'
+        : props.theme.color.text.heading} !important;
+      * {
+        color: ${props.color === 'primary'
+          ? props.theme.color.primary
+          : props.color === 'secondary'
+          ? props.theme.color.secondary
+          : props.color === 'success'
+          ? props.theme.color.success
+          : props.color === 'error'
+          ? props.theme.color.error
+          : props.color === 'white'
+          ? 'white'
+          : props.theme.color.text.heading} !important;
+      }
+      border: 1px solid
+        ${props.color === 'primary'
+          ? props.theme.color.primary
+          : props.color === 'secondary'
+          ? props.theme.color.secondary
+          : props.color === 'success'
+          ? props.theme.color.success
+          : props.color === 'error'
+          ? props.theme.color.error
+          : props.color === 'white'
+          ? 'white'
+          : props.color === 'dark'
+          ? props.theme.color.gray.six
+          : pSBC(props.theme.color.gray.two, -10)};
+      :hover {
+        box-shadow: ${props.theme.shadow.button};
+        background: ${props.color === 'primary'
+          ? props.theme.color.primary
+          : props.color === 'secondary'
+          ? props.theme.color.secondary
+          : props.color === 'success'
+          ? props.theme.color.success
+          : props.color === 'error'
+          ? props.theme.color.error
+          : props.color === 'white'
+          ? 'white'
+          : props.color === 'dark'
+          ? props.theme.color.gray.six
+          : props.theme.color.gray.two};
+        color: ${props.color === 'white'
+          ? 'initial'
+          : props.color
+          ? 'white'
+          : props.theme.color.text.heading} !important;
+        * {
+          color: ${props.color === 'white'
+            ? 'initial'
+            : props.color
+            ? 'white'
+            : props.theme.color.text.heading} !important;
+        }
+      }
+    `};
+
+  ${(props) =>
+    props.variant === 'plain' &&
+    css`
+      background: transparent;
+      box-shadow: none;
+      color: ${props.color === 'primary'
+        ? props.theme.color.primary
+        : props.color === 'secondary'
+        ? props.theme.color.secondary
+        : props.color === 'success'
+        ? props.theme.color.success
+        : props.color === 'error'
+        ? props.theme.color.error
+        : props.color === 'white'
+        ? 'white'
+        : props.theme.color.text.heading} !important;
+      * {
+        color: ${props.color === 'primary'
+          ? props.theme.color.primary
+          : props.color === 'secondary'
+          ? props.theme.color.secondary
+          : props.color === 'success'
+          ? props.theme.color.success
+          : props.color === 'error'
+          ? props.theme.color.error
+          : props.color === 'white'
+          ? 'white'
+          : props.theme.color.text.heading} !important;
+      }
+      border: 1px solid transparent;
+      :hover {
+        box-shadow: none;
+        background: ${props.color === 'primary'
+          ? `${props.theme.color.primary}15`
+          : props.color === 'secondary'
+          ? `${props.theme.color.secondary}15`
+          : props.color === 'success'
+          ? `${props.theme.color.success}15`
+          : props.color === 'error'
+          ? `${props.theme.color.error}15`
+          : props.color === 'white'
+          ? '#ffffff10'
+          : props.theme.color.gray.one};
+        // color: ${props.color === 'white' ? 'initial' : 'white'};
+      }
+    `};
+  ${(props) =>
+    props.customStyles &&
+    css`
+      ${props.customStyles}
+    `};
+`;
+
+const StyledA = styled.a`
+  box-shadow: ${(props) =>
+    props.color === 'primary' ||
+    props.color === 'secondary' ||
+    props.color === 'success' ||
+    props.color === 'error' ||
+    props.color === 'white' ||
+    props.color === 'dark'
+      ? props.theme.shadow.button
+      : '3px 3px 18px -6px #0000001a'};
+  font-weight: 600;
+  outline: none;
+  padding: 12px 24px;
+  border: none;
+  width: ${(props) => (props.fullWidth ? '100%' : null)};
+  font-size: 16px;
+  // font-weight: 500;
+  letter-spacing: 1.4px;
+  padding: ${(props) =>
+    props.size === 'small'
+      ? '6px 18px'
+      : props.size === 'large'
+      ? '18px 30px'
+      : '12px 26px'};
+
+  font-size: ${(props) =>
+    props.size === 'small' ? '16px' : props.size === 'large' ? '18px' : '17px'};
+  border-radius: ${(props) => props.theme.radius.one};
+  cursor: pointer;
+  transition: all 0.25s;
+  // text-transform: uppercase;
+  :active {
+    box-shadow: none !important;
+  }
+
+  background: ${(props) =>
+    props.color === 'primary'
+      ? props.theme.color.primary
+      : props.color === 'secondary'
+      ? props.theme.color.secondary
+      : props.color === 'success'
+      ? props.theme.color.success
+      : props.color === 'error'
+      ? props.theme.color.error
+      : props.color === 'white'
+      ? 'white'
+      : props.color === 'dark'
+      ? props.theme.color.gray.six
+      : props.theme.color.gray.two};
+  color: ${(props) =>
+    props.color === 'white'
+      ? props.theme.color.text.heading
+      : props.color === 'primary' ||
+        props.color === 'secondary' ||
+        props.color === 'success' ||
+        props.color === 'error' ||
+        props.color === 'dark'
+      ? 'white'
+      : props.theme.color.text.heading};
+  * {
+    color: ${(props) =>
+      props.color === 'white'
+        ? props.theme.color.text.heading
+        : props.color === 'primary' ||
+          props.color === 'secondary' ||
+          props.color === 'success' ||
+          props.color === 'error' ||
+          props.color === 'dark'
+        ? 'white'
+        : props.theme.color.text.heading};
+  }
+  border: 1px solid transparent;
+  :hover {
+    box-shadow: ${(props) =>
+      props.color === 'primary' ||
+      props.color === 'secondary' ||
+      props.color === 'success' ||
+      props.color === 'error' ||
+      props.color === 'white' ||
+      props.color === 'dark'
+        ? props.theme.shadow.buttonHover
+        : '3px 3px 18px -6px #00000021'};
+    background: ${(props) =>
+      props.color === 'primary'
+        ? pSBC(props.theme.color.primary, -25)
+        : props.color === 'secondary'
+        ? pSBC(props.theme.color.secondary, -25)
+        : props.color === 'success'
+        ? pSBC(props.theme.color.success, -25)
+        : props.color === 'error'
+        ? pSBC(props.theme.color.error, -25)
+        : props.color === 'white'
+        ? pSBC('#ffffff', -25)
+        : props.color === 'dark'
+        ? pSBC(props.theme.color.gray.six, -25)
+        : pSBC(props.theme.color.gray.two, -10)};
+    // color: ${(props) => (props.color === 'white' ? 'initial' : 'white')};
+  }
+
+  ${(props) =>
+    props.variant === 'outlined' &&
+    css`
+      background: transparent;
+      box-shadow: none;
+      color: ${props.color === 'primary'
+        ? props.theme.color.primary
+        : props.color === 'secondary'
+        ? props.theme.color.secondary
+        : props.color === 'success'
+        ? props.theme.color.success
+        : props.color === 'error'
+        ? props.theme.color.error
+        : props.color === 'white'
+        ? 'white'
+        : props.theme.color.text.heading} !important;
+      * {
+        color: ${props.color === 'primary'
+          ? props.theme.color.primary
+          : props.color === 'secondary'
+          ? props.theme.color.secondary
+          : props.color === 'success'
+          ? props.theme.color.success
+          : props.color === 'error'
+          ? props.theme.color.error
+          : props.color === 'white'
+          ? 'white'
+          : props.theme.color.text.heading} !important;
+      }
+      border: 1px solid
+        ${props.color === 'primary'
+          ? props.theme.color.primary
+          : props.color === 'secondary'
+          ? props.theme.color.secondary
+          : props.color === 'success'
+          ? props.theme.color.success
+          : props.color === 'error'
+          ? props.theme.color.error
+          : props.color === 'white'
+          ? 'white'
+          : props.color === 'dark'
+          ? props.theme.color.gray.six
+          : pSBC(props.theme.color.gray.two, -10)};
+      :hover {
+        box-shadow: ${props.theme.shadow.button};
+        background: ${props.color === 'primary'
+          ? props.theme.color.primary
+          : props.color === 'secondary'
+          ? props.theme.color.secondary
+          : props.color === 'success'
+          ? props.theme.color.success
+          : props.color === 'error'
+          ? props.theme.color.error
+          : props.color === 'white'
+          ? 'white'
+          : props.color === 'dark'
+          ? props.theme.color.gray.six
+          : props.theme.color.gray.two};
+        color: ${props.color === 'white'
+          ? 'initial'
+          : props.color
+          ? 'white'
+          : props.theme.color.text.heading} !important;
+        * {
+          color: ${props.color === 'white'
+            ? 'initial'
+            : props.color
+            ? 'white'
+            : props.theme.color.text.heading} !important;
+        }
+      }
+    `};
+
+  ${(props) =>
+    props.variant === 'plain' &&
+    css`
+      background: transparent;
+      box-shadow: none;
+      color: ${props.color === 'primary'
+        ? props.theme.color.primary
+        : props.color === 'secondary'
+        ? props.theme.color.secondary
+        : props.color === 'success'
+        ? props.theme.color.success
+        : props.color === 'error'
+        ? props.theme.color.error
+        : props.color === 'white'
+        ? 'white'
+        : props.theme.color.text.heading} !important;
+      * {
+        color: ${props.color === 'primary'
+          ? props.theme.color.primary
+          : props.color === 'secondary'
+          ? props.theme.color.secondary
+          : props.color === 'success'
+          ? props.theme.color.success
+          : props.color === 'error'
+          ? props.theme.color.error
+          : props.color === 'white'
+          ? 'white'
+          : props.theme.color.text.heading} !important;
+      }
+      border: 1px solid transparent;
+      :hover {
+        box-shadow: none;
+        background: ${props.color === 'primary'
+          ? `${props.theme.color.primary}15`
+          : props.color === 'secondary'
+          ? `${props.theme.color.secondary}15`
+          : props.color === 'success'
+          ? `${props.theme.color.success}15`
+          : props.color === 'error'
+          ? `${props.theme.color.error}15`
+          : props.color === 'white'
+          ? '#ffffff10'
+          : props.theme.color.gray.one};
+        // color: ${props.color === 'white' ? 'initial' : 'white'};
+      }
+    `};
+  ${(props) =>
+    props.customStyles &&
+    css`
+      ${props.customStyles}
+    `};
 `;
 
 Button.propTypes = {

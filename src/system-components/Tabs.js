@@ -7,40 +7,39 @@ import TabList from './TabList';
 
 const Tabs = ({
   children,
+  className,
+  id,
   onChange,
   defaultValue,
   customStyles,
   fullWidth,
   value,
-  indicatorColor,
+  vertical,
 }) => {
   const [selectedTab, setSelectedTab] = useState(
     value || defaultValue || children[0].props.children[0].props.name,
   );
 
   const customOnClick = (newValue) => {
-    console.log('Custom onClick!');
     setSelectedTab(newValue);
 
     onChange(newValue);
   };
 
   useEffect(() => {
-    console.log('Value is: ', value);
     setSelectedTab(value);
   }, [value]);
 
   return (
-    <Wrapper customStyles={customStyles}>
-      <Flex hAlign="start">
+    <Wrapper className={className} id={id} customStyles={customStyles}>
+      <Flex direction={vertical ? 'vertical' : 'horizontal'} hAlign="start">
         {children.map((child) => {
-          console.log(child.type.name);
-          const newProps = {
+          let newProps = {
             ...child.props,
             onClick: customOnClick,
             selectedTab,
-            fullWidth,
-            indicatorColor,
+            fullWidth: fullWidth,
+            vertical: vertical,
           };
           newProps.active = selectedTab === child.props.name;
 

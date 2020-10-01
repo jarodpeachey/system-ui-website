@@ -1,11 +1,20 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
-const Section = ({ children, background, className = '', spacing }) => {
+const Section = ({
+  children,
+  className,
+  id,
+  customStyles,
+  background,
+  spacing,
+}) => {
   return (
     <StyledSection
-      spacing={spacing}
       className={className}
+      id={id}
+      customStyles={customStyles}
+      spacing={spacing}
       background={background}
     >
       {children}
@@ -14,16 +23,10 @@ const Section = ({ children, background, className = '', spacing }) => {
 };
 
 const StyledSection = styled.section`
-  text-align: ${(props) => (props.center ? 'center' : 'inherit')};
   z-index: 1;
   background: ${(props) => props.background};
-  padding: ${(props) =>
-      props.spacing === 'small' ?
-        44 :
-        props.spacing === 'large' ?
-        78 :
-        props.spacing || 52}px
-    0;
+  padding: ${(props) => (props.spacing ? props.spacing : 52)}px 0;
+  ${(props) => props.customStyles}
 `;
 
 export default Section;

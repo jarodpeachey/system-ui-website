@@ -6,20 +6,21 @@ import Hero from '../system-components/Hero';
 import Section from '../system-components/Section';
 import Button from '../system-components/Button';
 import IconButton from '../system-components/IconButton';
-import Row from '../system-components/Row';
+import { Row, Column } from '@react-tiny-grid/core';
 
-import Heading from '../system-components/Heading';
+import H1 from '../system-components/H1';
+import H2 from '../system-components/H2';
+import Span from '../system-components/Span';
+import Card from '../system-components/Card';
 import Alert from '../system-components/Alert';
-import Code from '../system-components/Code';
 import Info from '../system-components/Info';
 import Container from '../system-components/Container';
 import Layout from '../components/layout';
-import SubTitle from '../system-components/SubTitle';
 import Paragraph from '../system-components/Paragraph';
 import Input from '../system-components/Input';
 import Flex from '../system-components/Flex';
 
-const App = ({}) => {
+const App = () => {
   const [email, setEmail] = useState('');
   const [error, setError] = useState(false);
   const [submitError, setSubmitError] = useState(false);
@@ -67,106 +68,139 @@ const App = ({}) => {
   return (
     <Layout>
       <Helmet>
-        <title>System - React UI Kit</title>
+        <title>SystemUI - Custom UI kits for your brand</title>
       </Helmet>
       <Hero
-        background={`linear-gradient(
-        to right,
-        ${theme.color.primary.main},
-        ${theme.color.secondary.main}
-      )`}
+        background="#ffffff"
+        customStyles="padding-top: 24px; text-align: center; @media(min-width: 769px){text-align: left;}"
       >
-        <Heading type="h1" background="dark" className="center">
-          React Development Made Easy
-        </Heading>
-        <SubTitle type="h4" className="center" customStyles="color: #ffffffcc;">
-          A modern UI Kit built to speed up your development proccess, while
-          still allowing you room to customize and grow.
-        </SubTitle>
-      </Hero>
-      <Section spacing="small">
-        <Container>
+        <Row spacing={[12]} breakpoints={[769]}>
+          <Column widths={[8]}>
+            <H1
+              display
+              customStyles="text-align: center; @media(min-width: 769px){text-align: left;}"
+            >
+              Create a <Span color="primary">fully-custom</Span> UI kit for your
+              brand
+            </H1>
+            <Paragraph
+              customStyles="text-align: center; @media(min-width: 769px){text-align: left;}"
+              size="lg"
+            >
+              SystemUI lets you generate your own UI kit that doesn't limit your
+              brand with hard-to-style components. Perfect for startups and
+              small businesses.
+            </Paragraph>
+          </Column>
+        </Row>
+        <br />
+        <Paragraph size="sm">
+          Sign up to be notified when SystemUI is released.
+        </Paragraph>
+
+        {!submitError && !submitSuccess ? (
+          <>
+            <Flex
+              hAlign="flex-start"
+              customStyles="@media(max-width: 768px){flex-direction: column; margin: 0 auto;} max-width: 400px;"
+            >
+              <Input
+                state={error ? 'error' : null}
+                color={error ? 'error' : 'primary'}
+                fullWidth
+                placeholder="user@mail.com"
+                customStyles="height: 46px;"
+                placeholder="user@mail.com"
+                onChange={onChange}
+              />
+              <Button
+                customStyles="height: 46px; padding-top: 0; padding-bottom: 0; margin-left: 16px; @media(max-width: 768px){width: 100%; margin-top: 12px; margin-left: 0;} white-space: nowrap;"
+                color="primary"
+                onClick={onSubmit}
+              >
+                Deal me in!
+              </Button>
+            </Flex>
+          </>
+        ) : submitError ? (
           <Alert
-            color="success"
-            variant="light"
-            icon={<FontAwesomeIcon icon="question-circle" />}
-            style={{ maxWidth: 780, margin: '0 auto' }}
+            color="error"
           >
-            <strong>Did you know?</strong> This website is built completely with
-            System. Not a shred of custom CSS!
+            Ah, snap! There was an error signing you up. If you'd still like to
+            subscribe, you can email me at jarodpeachey@gmail.com and I'll add
+            you manually.
           </Alert>
-        </Container>
-      </Section>
-      <Section className="pt-none" spacing="large">
+        ) : (
+          <Alert color="success">
+            You've been successfully signed up! Check your email for a
+            confirmation link, and then you're good to go!
+          </Alert>
+        )}
+      </Hero>
+      <Section background={theme.color.gray.one}>
         <Container>
-          <Heading
-            display="title"
-            type="h5"
-            color="primary"
-            className="center mt-none"
-          >
-            Built For You
-          </Heading>
-          <Heading type="h2" className="center mt-3">
-            What is System?
-          </Heading>
-          <Container size="sm">
-            <Paragraph className="center" style={{ maxWidth: 780 }}>
-              System is a UI Kit like none other. It's dead-simple to get up and
-              running, and offers advanced customization options that are easier
-              than most other UI kits.
-            </Paragraph>
-            <Paragraph className="center mb-7" style={{ maxWidth: 780 }}>
-              With System, you can easily create a website for your product,
-              without spending the time and money to do it. System allows you to
-              focus on developing and marketing your product.
-            </Paragraph>
-          </Container>
-          <Row spacing={[24, 32]} breakpoints={[769, 960]}>
-            <div widths={[6, 4]}>
-              <Info
-                title="Drop-in Components"
-                color="primary"
-                icon={<FontAwesomeIcon icon="boxes" />}
-              >
-                <Paragraph>
-                  System comes with a variety of components that require no
-                  custom setup, so you can get up and running in no time.
-                </Paragraph>
-                <Paragraph>
-                  In fact, this entire website is built using System: no custom
-                  code added!
-                </Paragraph>
-              </Info>
-            </div>
-            <div widths={[6, 4]}>
-              <Info
-                title="Custom Theming"
-                color="primary"
-                icon={<FontAwesomeIcon icon="palette" />}
-              >
-                <Paragraph>
-                  With custom theming options, you can make System your own.
-                </Paragraph>
-                <Paragraph>
-                  Customize everything from font size, colors, spacing, box
-                  shadow, border radius and more.
-                </Paragraph>
-              </Info>
-            </div>
-            <div widths={[6, 4]}>
-              <Info
-                title="Style Overrides"
-                color="primary"
-                icon={<FontAwesomeIcon icon="cog" />}
-              >
-                <Paragraph>
-                  Each System component accepts a customStyles prop, which
-                  overrides any other styles you've defined. This gives you more
-                  flexibility with your components.
-                </Paragraph>
-              </Info>
-            </div>
+          <Row spacing={[16]} breakpoints={[769, 960]}>
+            <Column widths={[10, 8]} offsets={[1, 2]}>
+              <H2 className="center">Take control of your UI kit</H2>
+              <Paragraph className="center" customStyles="margin-bottom: 16px;">
+                Whether you want to customize a few things or create your own
+                fully-functional UI kit, System UI has you covered. Some of
+                SystemUI's features include:
+              </Paragraph>
+            </Column>
+          </Row>
+          <Row spacing={[16]} breakpoints={[576, 1100]}>
+            <Column widths={[6, 4]}>
+              <Card>
+                <Info
+                  title="Prebuilt Components"
+                  color="primary"
+                  icon={<FontAwesomeIcon icon="boxes" />}
+                >
+                  <Paragraph>
+                    SystemUI comes with 100+ components out of the box, making
+                    creating your MVP easier than ever.
+                  </Paragraph>
+                  <Paragraph>
+                    In fact, this entire website is built using SystemUI: no
+                    custom code added!
+                  </Paragraph>
+                </Info>
+              </Card>
+            </Column>
+            <Column widths={[6, 4]}>
+              <Card>
+                <Info
+                  title="Custom Theming"
+                  color="primary"
+                  icon={<FontAwesomeIcon icon="palette" />}
+                >
+                  <Paragraph>
+                    Unlike other UI kits, SystemUI doesn't just let you
+                    customize some colors; it lets you create your own UI kit.
+                  </Paragraph>
+                  <Paragraph>
+                    Change everything from shadows, text, border radius,
+                    backgrounds and more to make your UI kit fit your brand.
+                  </Paragraph>
+                </Info>
+              </Card>
+            </Column>
+            <Column widths={[6, 4]}>
+              <Card>
+                <Info
+                  title="Instance Customization"
+                  color="primary"
+                  icon={<FontAwesomeIcon icon="cog" />}
+                >
+                  <Paragraph>
+                    Can't get something to look right? SystemUI makes it easy to
+                    customize each individual element at the source, allowing
+                    you to create a pixel-perfect layout, every time.
+                  </Paragraph>
+                </Info>
+              </Card>
+            </Column>
 
             {/* <div widths={[6, 4]}>
             <Info
@@ -185,93 +219,69 @@ const App = ({}) => {
             </Info>
           </div> */}
           </Row>
-          <Flex>
-            <span id="sign-up" />
-            <Button className="mt-4" color="primary" link="/components">
-              View Components
-            </Button>
-          </Flex>
         </Container>
       </Section>
-      {/* <Section background={`${theme.color.error}10`}>
-      <Container>
-        <Heading
-          type="h3"
-          className="mt-none"
-          customStyles={`color: ${theme.color.error};`}
-        >
-          <FontAwesomeIcon
-            icon="exclamation-circle"
-            style={{ marginRight: 10 }}
-          />
-          Construction Notice
-        </Heading>
-        <Paragraph className="mb-5" style={{ color: theme.color.error }}>
-          System UI Kit is still in development, but feel free to browse the
-          site and look at the components I've already completed!
-        </Paragraph>
-        <Button link="/components" color="error">
-          See Components
-        </Button>
-      </Container>
-    </Section> */}
-      <Section spacing="large" background={`${theme.color.gray.one}`}>
+      <Section>
         <Container>
-          <Heading type="h2" className="mt-none center">
-            Join the waiting list!
-          </Heading>
+          <Row spacing={[16]} breakpoints={[769, 960]}>
+            <Column widths={[10, 8]} offsets={[1, 2]}>
+              <H2 className="center">Ready to create your own UI kit?</H2>
+              {!submitError && !submitSuccess && (
+                <Paragraph
+                  className="center"
+                  customStyles="margin-bottom: 16px;"
+                >
+                  SystemUI is still in development. Sign up to be notified when
+                  it's released, and recieve a discount!
+                </Paragraph>
+              )}
+            </Column>
+          </Row>
           {!submitError && !submitSuccess ? (
             <>
-              <SubTitle
-                className="mb-5 center"
-                style={{ color: theme.color.error }}
-              >
-                Sign up to be notified when System is launched, and get a nice
-                discount to go with it!
-              </SubTitle>
-              <Container size="sm">
-                <Row spacing={[8, 8]} breakpoints={[576, 800]}>
-                  <div widths={[9, 10]}>
-                    <Input
-                      state={error ? 'error' : null}
-                      color={error ? 'error' : 'primary'}
-                      size="large"
-                      fullWidth
-                      placeholder="user@mail.com"
-                      onChange={onChange}
-                    />
-                  </div>
-                  <div widths={[3, 2]}>
-                    <Button
-                      onClick={onSubmit}
-                      color="primary"
-                      size="large"
-                      fullWidth
-                    >
-                      Join
-                    </Button>
-                  </div>
-                </Row>
-              </Container>
+              <Row spacing={[8, 8]} breakpoints={[576, 800]}>
+                <div widths={[9, 10]}>
+                  <Input
+                    state={error ? 'error' : null}
+                    color={error ? 'error' : 'primary'}
+                    size="large"
+                    fullWidth
+                    placeholder="user@mail.com"
+                    customStyles="height: 56px;"
+                    placeholder="user@mail.com"
+                    onChange={onChange}
+                  />
+                </div>
+                <div widths={[3, 2]}>
+                  <Button
+                    customStyles="height: 56px; padding-top: 0; padding-bottom: 0;"
+                    size="large"
+                    fullWidth
+                    color="primary"
+                    onClick={onSubmit}
+                  >
+                    Join
+                  </Button>
+                </div>
+              </Row>
             </>
           ) : submitError ? (
             <Alert
               color="error"
-              icon={<FontAwesomeIcon icon="exclamation-circle" />}
             >
               Ah, snap! There was an error signing you up. If you'd still like
               to subscribe, you can email me at jarodpeachey@gmail.com and I'll
               add you manually.
             </Alert>
           ) : (
-            <Alert color="success" icon={<FontAwesomeIcon icon="check" />}>
+            <Alert color="success">
               You've been successfully signed up! Check your email for a
               confirmation link, and then you're good to go!
             </Alert>
           )}
         </Container>
       </Section>
-      <Section className="py-3" background={theme.color.heading}>
+      <Section spacing={12} background={theme.color.gray.six}>
         <Container>
           <Flex hAlign="space-between">
             <span style={{ color: 'white' }}>
@@ -279,7 +289,7 @@ const App = ({}) => {
             </span>
             <span>
               <IconButton
-                link="https://twitter.com/jarod_peachey"
+                link="https://twitter.com/jarodpeachey"
                 external
                 circle
                 color="white"
